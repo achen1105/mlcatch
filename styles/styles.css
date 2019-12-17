@@ -1,0 +1,66 @@
+/* // doesn't work; p is the selector, color is property, red property value
+color: red is declaration, everything is called rule set
+p, li to select both selectors
+use multiple lines for multiple styles*/
+/*p, li {
+  color: red;
+  width: 500px;
+  border: 1px solid black;
+}*/
+
+/*Get css and html here https://fonts.google.com/specimen/Quicksand*/
+html {
+  font-size: 20px; /* px means "pixels": the base font size is now 10 pixels high  */
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif; /* this should be the rest of the output you got from Google fonts */
+  line-height: 2; /* spacing between lines */
+  letter-spacing: 1px; /* spreading words out */
+  /*background-color: #FFEBEF;*/
+  background: url('../images/pinkcutebackground.jpg'); // got to make sure your path is right
+  background-size: cover;
+  background-repeat: repeat-x;
+}
+
+h1 {
+  margin: 0; /* gap at top */
+  padding: 20px 0; /* top bottom */
+  color: #ffafc4;
+  /*text-shadow: 3px 3px 1px black;*/ /* horizontal offset, vertical offset, blur radius, base color */
+  font-size: 60px;
+  font-family: 'Alex Brush', cursive;
+  line-height: normal;
+  text-align: center; /* center */
+}
+
+h4 {
+  font-size: 12px; /* px means "pixels": the base font size is now 10 pixels high  */
+  font-family: 'Quicksand', sans-serif; /* this should be the rest of the output you got from Google fonts */
+  line-height: 2; /* spacing between lines */
+  letter-spacing: 1px; /* spreading words out */
+  text-align: center; /* center */
+}
+
+body {
+  width: 800px; /* body always 600px */
+  margin: 0 auto; /* top/bottom is 0, left and right evenly distributed */
+  background-color: #fffaf4;
+  padding: 0 20px 0px 20px; /* top right bottom left */
+  border: 5px solid #ffebef; /* took a while but here: https://stackoverflow.com/questions/7094608/why-my-css-did-not-set-the-color-of-div-border-successfully */
+}
+
+img {
+  display: block; /* body is block level, image is inline, must apply block for margin */
+  margin: 0 auto;
+}
+
+button {
+  background-color: #FFEBEF;
+  background-position: center;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}

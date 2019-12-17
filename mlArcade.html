@@ -1,0 +1,51 @@
+<!-- Makes sure your document behaves -->
+<!DOCTYPE html>
+<!-- wraps everything on the page, root element -->
+<html>
+  <!-- container for all the stuff that you don't want on page -->
+  <head>
+    <!-- set to handle characters -->
+    <meta charset="utf-8">
+    <!-- title that appears when browser loads -->
+    <title>Maid Latte Arcade!</title>
+    <link rel="icon" href="images/mllogo.png">
+    <!-- link the css stylesheet file to html file-->
+    <link href="styles/styles.css" rel="stylesheet">
+    <!-- Quicksand font -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+    <!-- Alex Brush font -->
+    <link href="https://fonts.googleapis.com/css?family=Alex+Brush&display=swap" rel="stylesheet">
+    <!-- Pacifico font -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+  </head>
+
+
+
+  <!-- contains all the stuff you do want on the page -->
+  <body>
+    <!-- title of page -->
+    <div style="float:left"><img src = "images/mllogo.png" style = "width:60px; height:60px;"></div>
+    <div style="float:left"><h1>Maid Latté Arcade</h1></div>
+    <div style="clear:both"/>
+
+
+    <canvas id = "myCanvas" width = 800 height = 600>
+    </canvas>
+    <script src = "scripts/game.js">
+    </script>
+
+    <!-- image, alt = alternative text -->
+    <img src="images/molanghug.png" alt="Molang Hug" id = "start">
+
+    <!-- button for personalized message -->
+    <button><a href="https://www.instagram.com/maidlatte.ln/">ML Instagram</a></button>
+    <button><a href="https://maidlatteln.wixsite.com/website">ML Website</a></button>
+    <!-- button for personalized message -->
+    <button>Change user</button>
+    <!-- add javascript, always right before </body>  -->
+
+    <!-- paragraph, anchor with href to link-->
+    <h4>©2019 by Maid Latté! Github</h4>
+
+  </body>
+</html>
