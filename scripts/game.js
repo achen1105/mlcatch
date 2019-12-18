@@ -1,87 +1,110 @@
-// http://dev.bennage.com/blog/2013/01/11/game-dev-02/
-
-/* var currentScreen = 0;
-var molangHug = getImage("images/molanghug");
-
-var drawButton = function()
-{
-  fill(81, 166, 31);
-  rect(340, 10, 50, 25);
-  fill(255, 255, 255);
-  textSize(16);
-  text("NEXT", 344, 29);
-}
-
-var drawScreen1 = function()  start screen
-{
-  currentScreen = 1;
-  background(200, 175, 175);
-  image(molangHug, 50, 200);
-}
-
-
-create button
-var btn1 = new Button ({
-    x: 350,
-    y: 350,
-    width: 80,
-    height: 50,
-    color: color(222, 173, 222),
-    label: "Start"
-});
+/* Name: Anita Chen, Date: 12/25/2019
+game.js: This javascript file contains the game logic.
 */
 
-// Initialize myCanvas
+// Initialize canvas and context
 var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
-/*
-var home = new Image();
-home.src = '../mlarcade/images/home.png';
-var start = new Image();
-start.src = '../mlarcade/images/start.png';
-var instructions = new Image();
-instructions.src = '../mlarcade/images/instructions.png';
-var about = new Image();
-about.src = '../mlarcade/images/about.png';
-var credits = new Image();
-credits.src = '../mlarcade/images/credits.png';
-var settings = new Image();
-settings.src = '../mlarcade/images/settings.png';
+// Initialize page counter
+var page = 0;
+// Clear and update game screen 50 times per second
+// var interval = setInterval(updateGameArea, 20);
 
-function isLoaded()
+// Draws the Home Page
+function drawHomePage()
 {
-  if (home.isLoaded)
-  {
-    return true;
-  }
-}
-*/
-
-function drawButton(buttonName = "", posx = 350, posy = 350, width = 100, height = 50)
-{
-  context.beginPath();
-  context.fillStyle = "#FFAFC4";
-  context.rect(posx, posx, width, height);
-  context.fill();
-  context.closePath();
-
-  context.beginPath();
-  context.fillStyle = "#FFFFFF";
-  context.font = '48px serif';
-  context.fillText(buttonName, posx + 10, posy + 10);
-  context.closePath();
+  var home = new Image();
+  home.onload = function() {
+        context.drawImage(home, 0, 0);
+  };
+  home.src = '../mlcatch/images/startscreen.png';
+  page = 0; // home page
 }
 
+// Draws the About Page
 function drawAboutPage()
 {
   var aboutPage = new Image();
   aboutPage.onload = function() {
         context.drawImage(aboutPage, 0, 0);
   };
-  aboutPage.src = '../mlarcade/images/aboutpage.png';
-  alert("draw about page");
+  aboutPage.src = '../mlcatch/images/aboutpage.png';
+  page = 1; // about page
+  // alert("draw about page");
 }
 
+// Draws the Instructions Page
+function drawInstructionsPage()
+{
+  var instructionsPage = new Image();
+  instructionsPage.onload = function() {
+        context.drawImage(instructionsPage, 0, 0);
+  };
+  instructionsPage.src = '../mlcatch/images/instructionspage.png';
+  page = 2; // instructions page
+  // alert("draw about page");
+}
+
+// Draws the Credits Page
+function drawCreditsPage()
+{
+  var creditsPage = new Image();
+  creditsPage.onload = function() {
+        context.drawImage(creditsPage, 0, 0);
+  };
+  creditsPage.src = '../mlcatch/images/creditspage.png';
+  page = 3; // credits page
+  // alert("draw about page");
+}
+
+// Draws the game background
+function drawGamePage()
+{
+  var gamePage = new Image();
+  gamePage.onload = function() {
+        context.drawImage(gamePage, 0, 0);
+  };
+  gamePage.src = '../mlcatch/images/gamepage.png';
+
+  // drawCup();
+
+  page = 4; // game background
+  // alert("draw about page");
+}
+
+// Draws the cup
+function drawCup(posx = 10)
+{
+  var cup = new Image();
+  cup.onload = function() {
+        context.drawImage(cup, posx, 250, 150, 150);
+  };
+  cup.src = '../mlcatch/images/cup.png';
+}
+
+/*
+function clear()
+{
+  context.clearRect(0, 0, 600, 450);
+}
+
+function update(newpos = 10)
+{
+  drawGamePage();
+  drawCup(newpos);
+}
+
+function updateGameArea()
+{
+  if (page = 4)
+  {
+    clear();
+    update();
+  }
+}
+*/
+
+// Starts the game
 function startGame()
 {
   // create game space
@@ -90,69 +113,78 @@ function startGame()
   context.fillRect(0, 0, 800, 600);
   context.closePath();
 
-  // home background
-  var home = new Image();
-  home.onload = function() {
-        context.drawImage(home, 0, 0);
-  };
-  home.src = '../mlarcade/images/home.png';
-  home.onclick = function(){
-    drawAboutPage();
-  };
+  // Draw the home page
+  drawHomePage();
 
+  window.addEventListener('keydown', function (e)
+  {
+    if (e.key === "ArrowUp")
+    {
+      // alert("up");
+      e.preventDefault();
 
-  // start button, 300*100
-var start = new Image();
-  start.onload = function() {
-        context.drawImage(start, 250, 300, 300, 100);
-  };
-  start.src = '../mlarcade/images/start.png';
+      if (page == 0) // Home: Press UP to start
+      {
+        drawInstructionsPage();
+      }
+      else if (page == 1) // About: Press UP to go home
+      {
+        drawHomePage();
+      }
+      else if (page == 2) // Instructions: Press UP to go to game background
+      {
+        drawGamePage();
+      }
+      else if (page == 4) // Game screen: Press UP to go home
+      {
+        drawHomePage();
+      }
+    }
+    else if (e.key === "ArrowDown")
+    {
+      // alert("down");
+      e.preventDefault();
+      if (page == 0) // Home: Press DOWN to go to about
+      {
+        drawAboutPage();
+      }
+    }
+    /*
+    else if (e.key === "ArrowLeft")
+    {
+      // alert("down");
+      e.preventDefault();
+      if (page == 4) // Home: Press DOWN to go to about
+      {
+        updateGameArea();
+      }
+    }
+    else if (e.key === "ArrowRight")
+    {
+      // alert("down");
+      e.preventDefault();
+      if (page == 4) // Home: Press DOWN to go to about
+      {
+        updateGameArea();
+      }
 
-  // instructions button, 300 * 50
-var instructions = new Image();
-  instructions.onload = function() {
-        context.drawImage(instructions, 250, 425, 300, 50);
-  };
-  instructions.src = '../mlarcade/images/instructions.png';
-
-  // about button, 130 * 50
-  var about = new Image();
-  about.onload = function() {
-        context.drawImage(about, 250, 525, 130, 50);
-  };
-  about.src = '../mlarcade/images/about.png';
-  about.onclick = function(){
-    drawAboutPage();
-  };
-
-  // credits button, 130 * 50
-var credits = new Image();
-  credits.onload = function() {
-        context.drawImage(credits, 420, 525, 130, 50);
-  };
-  credits.src = '../mlarcade/images/credits.png';
-
-  // settings button, 150 * 50
-  var settings = new Image();
-  settings.onload = function() {
-        context.drawImage(settings, 600, 25, 150, 50);
-  };
-  settings.src = '../mlarcade/images/settings.png';
-
-
-  // drawButton("Start");
-  //drawButton("Credits", 30, 120, 100, 50);
-
-  // fake button
-  /*
-  var img = new Image();   // Create new img element
-  img.onload = function() {
-        context.drawImage(img, 350, 420, 200, 150);
-  };
-  img.src = '../mlarcade/images/tontonchristmas2017 copy.png';
-  */
+    }
+    */
+  })
 }
 
+// Starts the game
 startGame();
 
-// please work
+/*
+window.addEventListener('keypress', function (e) {
+  if (e.key === " ")
+  {
+    alert("space");
+  }
+  else if (e.key === "a")
+  {
+    alert("a");
+  }
+})
+*/
