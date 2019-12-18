@@ -1,3 +1,7 @@
+/* Name: Anita Chen, Date: 12/25/2019
+styles.css: This css file contains the styling for the website.
+*/
+
 /* // doesn't work; p is the selector, color is property, red property value
 color: red is declaration, everything is called rule set
 p, li to select both selectors
@@ -41,10 +45,10 @@ h4 {
 }
 
 body {
-  width: 800px; /* body always 600px */
+  width: 600px; /* body always 600px */
   margin: 0 auto; /* top/bottom is 0, left and right evenly distributed */
   background-color: #fffaf4;
-  padding: 0 20px 0px 20px; /* top right bottom left */
+  padding: 0 100px 0px 100px; /* top right bottom left */
   border: 5px solid #ffebef; /* took a while but here: https://stackoverflow.com/questions/7094608/why-my-css-did-not-set-the-color-of-div-border-successfully */
 }
 
