@@ -7,8 +7,47 @@ var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
 // Initialize page counter
 var page = 0;
-// Clear and update game screen 50 times per second
-// var interval = setInterval(updateGameArea, 20);
+var loader = 0; // + 1 when images are loaded, 3 for all images loaded
+var posx = 10; // cup position
+var molangposy = 0; // molang y position
+var interval1; // molang
+var interval2; // cup
+
+// Initialize images
+var gamePage = new Image();
+gamePage.onload = function() {
+      // context.drawImage(gamePage, 0, 0);
+      loader = loader + 1;
+      console.log("done loading game page");
+};
+gamePage.src = '../mlcatch/images/gamepage.png';
+
+var cup = new Image();
+cup.onload = function() {
+      // context.drawImage(cup, pos, 250, 150, 150);
+      loader = loader + 1;
+      console.log("done loading cup");
+};
+cup.src = '../mlcatch/images/cup.png';
+
+var jia = new Image();
+jia.onload = function() {
+      // context.drawImage(cup, pos, 250, 150, 150);
+      loader = loader + 1;
+      // isLoaded(); // last image to load, so start game here
+      console.log("done loading jia");
+};
+jia.src = '../mlcatch/images/jia.png';
+
+// Draws the Loading Page
+function drawLoadingPage()
+{
+  var loading = new Image();
+  loading.onload = function() {
+        context.drawImage(loading, 0, 0);
+  };
+  loading.src = '../mlcatch/images/loadingpage.png';
+}
 
 // Draws the Home Page
 function drawHomePage()
@@ -19,6 +58,7 @@ function drawHomePage()
   };
   home.src = '../mlcatch/images/startscreen.png';
   page = 0; // home page
+  alert("home page");
 }
 
 // Draws the About Page
@@ -60,49 +100,40 @@ function drawCreditsPage()
 // Draws the game background
 function drawGamePage()
 {
-  var gamePage = new Image();
-  gamePage.onload = function() {
-        context.drawImage(gamePage, 0, 0);
-  };
-  gamePage.src = '../mlcatch/images/gamepage.png';
-
-  // drawCup();
-
+  context.drawImage(gamePage, 0, 0);
   page = 4; // game background
   // alert("draw about page");
 }
 
 // Draws the cup
-function drawCup(posx = 10)
+function drawCup()
 {
-  var cup = new Image();
-  cup.onload = function() {
-        context.drawImage(cup, posx, 250, 150, 150);
-  };
-  cup.src = '../mlcatch/images/cup.png';
+  context.drawImage(cup, posx, 225, 150, 150);
+  console.log("drew cup at " + posx);
 }
 
-/*
+function drawMolang()
+{
+  context.drawImage(jia, 0, molangposy, 100, 100);
+  molangposy = molangposy + 5;
+}
+
 function clear()
 {
   context.clearRect(0, 0, 600, 450);
 }
 
-function update(newpos = 10)
-{
-  drawGamePage();
-  drawCup(newpos);
-}
-
-function updateGameArea()
+function update()
 {
   if (page = 4)
   {
     clear();
-    update();
+    drawGamePage();
+    drawMolang();
+    drawCup();
+    console.log(page);
   }
 }
-*/
 
 // Starts the game
 function startGame()
@@ -115,6 +146,7 @@ function startGame()
 
   // Draw the home page
   drawHomePage();
+
 
   window.addEventListener('keydown', function (e)
   {
@@ -134,10 +166,18 @@ function startGame()
       else if (page == 2) // Instructions: Press UP to go to game background
       {
         drawGamePage();
+        interval1 = setInterval(drawMolang, 20);
+        interval2 = setInterval(update, 20);
       }
       else if (page == 4) // Game screen: Press UP to go home
       {
+        page = 0;
+        clear();
+        clearInterval(interval1);
+        clearInterval(interval2);
+        alert("cleared" + page);
         drawHomePage();
+        posx = 10;
       }
     }
     else if (e.key === "ArrowDown")
@@ -149,32 +189,44 @@ function startGame()
         drawAboutPage();
       }
     }
-    /*
     else if (e.key === "ArrowLeft")
     {
-      // alert("down");
       e.preventDefault();
-      if (page == 4) // Home: Press DOWN to go to about
+      if (page == 4)
       {
-        updateGameArea();
+        posx = posx - 10;
+        console.log(page + "left" + posx);
+        // setInterval(update, 20);
       }
     }
     else if (e.key === "ArrowRight")
     {
-      // alert("down");
       e.preventDefault();
-      if (page == 4) // Home: Press DOWN to go to about
+      if (page == 4)
       {
-        updateGameArea();
+        posx = posx + 10;
+        console.log(page + "right" + posx);
+        // setInterval(update, 20);
       }
-
     }
-    */
   })
 }
 
+/*
+function isLoaded()
+{
+  if (loader == 3)
+  {
+    startGame();
+  }
+}
+*/
+
 // Starts the game
-startGame();
+drawLoadingPage();
+// gives enough time to load
+setTimeout(startGame, 1000);
+
 
 /*
 window.addEventListener('keypress', function (e) {
