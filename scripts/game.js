@@ -8,10 +8,11 @@ var context = canvas.getContext("2d");
 // Initialize page counter
 var page = 0;
 var loader = 0; // + 1 when images are loaded, 3 for all images loaded
-var posx = 10; // cup position
+var posx = 250; // cup position
 var molangposy = 0; // molang y position
 var interval1; // molang
 var interval2; // cup
+var score = 0;
 
 // Initialize images
 var gamePage = new Image();
@@ -58,7 +59,7 @@ function drawHomePage()
   };
   home.src = '../mlcatch/images/startscreen.png';
   page = 0; // home page
-  alert("home page");
+  console.log("home page");
 }
 
 // Draws the About Page
@@ -109,13 +110,42 @@ function drawGamePage()
 function drawCup()
 {
   context.drawImage(cup, posx, 225, 150, 150);
-  console.log("drew cup at " + posx);
+  // console.log("drew cup at " + posx);
+}
+
+function checkCup(molangposx = 0) // true if the cup is in the path of the molang
+{
+  if (molangposy > 220 && molangposy <= 250 && posx >= molangposx - 100 && posx <= molangposx + 100)
+  {
+    score = score + 1;
+    console.log("score" + score);
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 function drawMolang()
 {
-  context.drawImage(jia, 0, molangposy, 100, 100);
-  molangposy = molangposy + 5;
+  if (!checkCup(0) && molangposy < 500) // 250 is the grass
+  {
+    context.drawImage(jia, 0, molangposy, 50, 50);
+    // console.log("i made it" + molangposy + checkCup(0));
+    molangposy = molangposy + 1;
+  }
+  else
+  {
+    molangposy = 500;
+  }
+}
+
+function drawScore()
+{
+  context.font = "bold 20px Arial";
+  context.fillStyle = "FFAFC4";
+  context.fillText("Score: " + score, 480, 400);
 }
 
 function clear()
@@ -131,7 +161,8 @@ function update()
     drawGamePage();
     drawMolang();
     drawCup();
-    console.log(page);
+    drawScore();
+    // console.log(page);
   }
 }
 
@@ -159,9 +190,9 @@ function startGame()
       {
         drawInstructionsPage();
       }
-      else if (page == 1) // About: Press UP to go home
+      else if (page == 1) // About: Press UP to go to credits
       {
-        drawHomePage();
+        drawCreditsPage();
       }
       else if (page == 2) // Instructions: Press UP to go to game background
       {
@@ -169,15 +200,21 @@ function startGame()
         interval1 = setInterval(drawMolang, 20);
         interval2 = setInterval(update, 20);
       }
+      else if (page == 3) // Credits: Press UP to go Home
+      {
+        drawHomePage();
+      }
       else if (page == 4) // Game screen: Press UP to go home
       {
         page = 0;
         clear();
         clearInterval(interval1);
         clearInterval(interval2);
-        alert("cleared" + page);
+        console.log("cleared" + page);
         drawHomePage();
         posx = 10;
+        molangposy = 0;
+        score = 0;
       }
     }
     else if (e.key === "ArrowDown")
@@ -194,8 +231,8 @@ function startGame()
       e.preventDefault();
       if (page == 4)
       {
-        posx = posx - 10;
-        console.log(page + "left" + posx);
+        posx = posx - 20;
+        // console.log(page + "left" + posx);
         // setInterval(update, 20);
       }
     }
@@ -204,8 +241,8 @@ function startGame()
       e.preventDefault();
       if (page == 4)
       {
-        posx = posx + 10;
-        console.log(page + "right" + posx);
+        posx = posx + 20;
+        // console.log(page + "right" + posx);
         // setInterval(update, 20);
       }
     }
