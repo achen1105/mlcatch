@@ -9,10 +9,22 @@ var context = canvas.getContext("2d");
 var page = 0;
 var loader = 0; // + 1 when images are loaded, 3 for all images loaded
 var posx = 250; // cup position
-var molangposy = 0; // molang y position
+// var molangposy = 0; // molang y position
 var interval1; // molang
 var interval2; // cup
+var interval3; // send molang
+var molangposx = [10, 50, 100, 40, 50, 60, 70, 80, 90, 100, 110]; // 11
+var molangposy = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 11
 var score = 0;
+var lives = 3;
+
+var sound = new Audio("images/mlsong.mp3");
+ sound.preload = 'auto';
+ sound.load();
+ sound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
 
 // Initialize images
 var gamePage = new Image();
@@ -22,6 +34,13 @@ gamePage.onload = function() {
       console.log("done loading game page");
 };
 gamePage.src = '../mlcatch/images/gamepage.png';
+
+var endPage = new Image();
+endPage.onload = function() {
+  loader = loader + 1;
+  console.log("done loading end page");
+};
+  endPage.src = '../mlcatch/images/endpage.png';
 
 var cup = new Image();
 cup.onload = function() {
@@ -40,6 +59,8 @@ jia.onload = function() {
 };
 jia.src = '../mlcatch/images/jia.png';
 
+var molang = [jia, jia, jia];
+
 // Draws the Loading Page
 function drawLoadingPage()
 {
@@ -48,6 +69,17 @@ function drawLoadingPage()
         context.drawImage(loading, 0, 0);
   };
   loading.src = '../mlcatch/images/loadingpage.png';
+}
+
+// Draws the Loading Page
+function drawLoadingPage2()
+{
+  var loading2 = new Image();
+  loading2.onload = function() {
+        context.drawImage(loading2, 0, 0);
+  };
+  loading2.src = '../mlcatch/images/loadingpage2.png';
+  page = 6;
 }
 
 // Draws the Home Page
@@ -106,6 +138,14 @@ function drawGamePage()
   // alert("draw about page");
 }
 
+// Draws the ending screen
+function drawEndPage()
+{
+  context.drawImage(endPage, 0, 0);
+  page = 5; // credits page
+  console.log("draw end page");
+}
+
 // Draws the cup
 function drawCup()
 {
@@ -113,12 +153,12 @@ function drawCup()
   // console.log("drew cup at " + posx);
 }
 
-function checkCup(molangposx = 0) // true if the cup is in the path of the molang
+function checkCup(num = 0) // true if the cup is in the path of the molang
 {
-  if (molangposy > 220 && molangposy <= 250 && posx >= molangposx - 100 && posx <= molangposx + 100)
+  if (molangposy[num] > 220 && molangposy[num] <= 250 && posx >= molangposx[num] - 75 && posx <= molangposx[num] + 75)
   {
-    score = score + 1;
-    console.log("score" + score);
+    // score = score + 1;
+    // console.log("score" + score);
     return true;
   }
   else
@@ -127,24 +167,51 @@ function checkCup(molangposx = 0) // true if the cup is in the path of the molan
   }
 }
 
+function updateScore(num = 0)
+{
+  if (molangposy[num] == 500)
+  {
+    score = score + 1;
+  }
+  else if(molangposy[num] == 475)
+  {
+    lives = lives - 1;
+    if (lives = 0)
+    {
+      setTimeout(drawEndPage, 1000);
+    }
+  }
+
+}
+
 function drawMolang()
 {
-  if (!checkCup(0) && molangposy < 500) // 250 is the grass
+  for (i = 0; i < molang.length; i++)
   {
-    context.drawImage(jia, 0, molangposy, 50, 50);
-    // console.log("i made it" + molangposy + checkCup(0));
-    molangposy = molangposy + 1;
-  }
-  else
-  {
-    molangposy = 500;
+    if (!checkCup(i) && molangposy[i] < 475) // 250 is the grass
+    {
+      context.drawImage(molang[i], molangposx[i], molangposy[i], 50, 50);
+      molangposy[i] = molangposy[i] + 1;
+      updateScore(i);
+      // console.log("i made it" + molangposy + checkCup(0));
+
+    }
+    else if (checkCup(i))
+    {
+      molangposy[i] = 500;
+      updateScore(i);
+    }
   }
 }
 
 function drawScore()
 {
   context.font = "bold 20px Arial";
-  context.fillStyle = "FFAFC4";
+  context.fillStyle = "#7f7f7f";
+  context.fillText("Lives: " + lives, 480, 350);
+
+  context.font = "bold 20px Arial";
+  context.fillStyle = "#7f7f7f";
   context.fillText("Score: " + score, 480, 400);
 }
 
@@ -159,10 +226,9 @@ function update()
   {
     clear();
     drawGamePage();
-    drawMolang();
     drawCup();
+    drawMolang();
     drawScore();
-    // console.log(page);
   }
 }
 
@@ -176,7 +242,7 @@ function startGame()
   context.closePath();
 
   // Draw the home page
-  drawHomePage();
+  drawLoadingPage2();
 
 
   window.addEventListener('keydown', function (e)
@@ -204,17 +270,32 @@ function startGame()
       {
         drawHomePage();
       }
-      else if (page == 4) // Game screen: Press UP to go home
+      else if (page == 4) // Game screen: Press UP to restart
       {
-        page = 0;
         clear();
         clearInterval(interval1);
         clearInterval(interval2);
         console.log("cleared" + page);
-        drawHomePage();
+        drawEndPage();
         posx = 10;
-        molangposy = 0;
         score = 0;
+        lives = 3;
+
+        for (i = 0; i < molang.length; i++)
+        {
+          molangposy[i] = 0;
+        }
+      }
+      else if (page == 5) // End screen: Press UP to go home
+      {
+        drawGamePage();
+        interval1 = setInterval(drawMolang, 20);
+        interval2 = setInterval(update, 20);
+      }
+      else if (page == 6)
+      {
+        sound.play();
+        drawHomePage();
       }
     }
     else if (e.key === "ArrowDown")
@@ -224,6 +305,10 @@ function startGame()
       if (page == 0) // Home: Press DOWN to go to about
       {
         drawAboutPage();
+      }
+      else if (page == 5)
+      {
+        drawHomePage();
       }
     }
     else if (e.key === "ArrowLeft")

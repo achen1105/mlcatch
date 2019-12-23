@@ -26,6 +26,11 @@ mlCatch.html: This html file contains the html for the game.-->
 
   <!-- contains all the stuff you do want on the page -->
   <body>
+    <!--
+    <audio id = "mlsong" preload = "auto" loop muted autoplay>
+      <source src="images/mlsong.mp3" type="audio/mpeg">
+    </audio>
+    -->
     <!-- title of page -->
     <div style="float:left"><img src = "images/mllogo.png" style = "width:60px; height:60px; padding-top: 20px; padding-right: 50px"></div>
     <div style="float:left"><h1>Maid Latté Catch!</h1></div>
@@ -50,15 +55,38 @@ mlCatch.html: This html file contains the html for the game.-->
     </script>
 
     <!-- image, alt = alternative text -->
-    <img src="images/molanghug.png" alt="Molang Hug" id = "start">
 
+
+
+  <div style = "margin-top: 20px">
+  <img src= "images/mlgiffinal.gif" alt="ML Gif" id = "mlgif">
+  </div>
     <!-- button for personalized message -->
+    <div style="text-align: center; margin: 20px">
     <button><a href="https://www.instagram.com/maidlatte.ln/">ML Instagram</a></button>
     <button><a href="https://maidlatteln.wixsite.com/website">ML Website</a></button>
     <!-- button for personalized message -->
-    <button>Change user</button>
+    <!--
+    <button id = "sound" onclick = "changeSound()">Sound Off</button>
+    <script>
+      function changeSound()
+      {
+        if (document.getElementById("sound").innerHTML == "Sound Off")
+        {
+          document.getElementById("mlsong").pause();
+          console.log("Here");
+          document.getElementById("sound").innerHTML = "Sound On";
+        }
+        else if (document.getElementById("sound").innerHTML == "Sound On")
+        {
+          document.getElementById("mlsong").play();
+          document.getElementById("sound").innerHTML = "Sound Off";
+        }
+      }
+    </script>
+    -->
     <!-- add javascript, always right before </body>  -->
-
+  </div>
     <!-- paragraph, anchor with href to link-->
     <h4>©2019 by Maid Latté! <a href="https://github.com/achen1105/mlcatch">Github</a></h4>
 
