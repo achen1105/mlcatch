@@ -13,8 +13,26 @@ var posx = 250; // cup position
 var interval1; // molang
 var interval2; // cup
 var interval3; // send molang
-var molangposx = [10, 50, 100, 40, 50, 60, 70, 80, 90, 100, 110]; // 11
-var molangposy = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 11
+var molangposx = [0, 30, 60, 90, 120,
+  150, 180, 210, 240, 270,
+  300, 330, 360, 390, 420,
+  450, 480, 510, 540, 570]; // 20
+var x;
+for (x = 0; x < molangposx.length; x++)
+{
+  molangposx[x] = 50 + 25 * (Math.floor(Math.random() * 20));
+}
+var molangposy = [0, 0, 0, 0, 0,
+   0, 0, 0, 0, 0,
+   0, 0, 0, 0, 0,
+   0, 0, 0, 0, 0]; // 20
+var y;
+for (y = 0; y < molangposy.length; y++)
+{
+  molangposy[y] = -1 * Math.floor(Math.random() * 50) * 10;
+}
+
+var status = [false, false, false, false, false];
 var score = 0;
 var lives = 3;
 
@@ -59,7 +77,12 @@ jia.onload = function() {
 };
 jia.src = '../mlcatch/images/jia.png';
 
-var molang = [jia, jia, jia];
+var molang = [jia, jia, jia, jia, jia];
+  /*
+  jia, jia, jia, jia, jia,
+  jia, jia, jia, jia, jia,
+  jia, jia, jia, jia, jia];
+*/
 
 // Draws the Loading Page
 function drawLoadingPage()
@@ -155,20 +178,23 @@ function drawCup()
 
 function checkCup(num = 0) // true if the cup is in the path of the molang
 {
-  if (molangposy[num] > 220 && molangposy[num] <= 250 && posx >= molangposx[num] - 75 && posx <= molangposx[num] + 75)
+  if (molangposy[num] > 220 && molangposy[num] <= 250 && molangposx[num] >= posx && molangposx[num] <= posx + 100)
   {
     // score = score + 1;
     // console.log("score" + score);
+    status[num] = true;
     return true;
   }
   else
   {
+    status[num] = false;
     return false;
   }
 }
 
 function updateScore(num = 0)
 {
+
   if (molangposy[num] == 500)
   {
     score = score + 1;
@@ -176,12 +202,50 @@ function updateScore(num = 0)
   else if(molangposy[num] == 475)
   {
     lives = lives - 1;
-    if (lives = 0)
+
+    if (lives <= 0)
     {
-      setTimeout(drawEndPage, 1000);
+      setTimeout(endGame, 1000);
     }
   }
 
+/*
+  var i;
+  for (i = 0; i < status.length; i++)
+  {
+    if (status[i])
+    {
+      score = score + 1;
+    }
+    else {
+    }
+  }
+*/
+}
+
+function endGame()
+{
+  page = 5;
+  clear();
+  clearInterval(interval1);
+  clearInterval(interval2);
+  console.log("cleared" + page);
+  drawEndPage();
+  drawEndScore();
+  posx = 10;
+  score = 0;
+  lives = 3;
+
+  var i;
+  for (i = 0; i < molangposx.length; i++)
+  {
+    molangposx[i] = 50 + (25 * (Math.floor(Math.random() * 20)));
+  }
+  var j;
+  for (j = 0; j < molangposy.length; j++)
+  {
+    molangposy[j] = -1 * Math.floor(Math.random() * 50) * 10;
+  }
 }
 
 function drawMolang()
@@ -192,9 +256,9 @@ function drawMolang()
     {
       context.drawImage(molang[i], molangposx[i], molangposy[i], 50, 50);
       molangposy[i] = molangposy[i] + 1;
-      updateScore(i);
-      // console.log("i made it" + molangposy + checkCup(0));
 
+      // console.log("i made it" + molangposy + checkCup(0));
+      updateScore(i);
     }
     else if (checkCup(i))
     {
@@ -215,6 +279,13 @@ function drawScore()
   context.fillText("Score: " + score, 480, 400);
 }
 
+function drawEndScore()
+{
+  context.font = "bold 40px Arial";
+  context.fillStyle = "#7f7f7f";
+  context.fillText(score, 310, 322);
+}
+
 function clear()
 {
   context.clearRect(0, 0, 600, 450);
@@ -222,7 +293,7 @@ function clear()
 
 function update()
 {
-  if (page = 4)
+  if (page == 4)
   {
     clear();
     drawGamePage();
@@ -272,11 +343,14 @@ function startGame()
       }
       else if (page == 4) // Game screen: Press UP to restart
       {
+        endGame();
+        /*
         clear();
         clearInterval(interval1);
         clearInterval(interval2);
         console.log("cleared" + page);
         drawEndPage();
+        drawEndScore();
         posx = 10;
         score = 0;
         lives = 3;
@@ -285,6 +359,7 @@ function startGame()
         {
           molangposy[i] = 0;
         }
+        */
       }
       else if (page == 5) // End screen: Press UP to go home
       {
@@ -294,7 +369,7 @@ function startGame()
       }
       else if (page == 6)
       {
-        sound.play();
+        // sound.play();
         drawHomePage();
       }
     }
