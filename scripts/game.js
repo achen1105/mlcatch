@@ -13,23 +13,23 @@ var posx = 250; // cup position
 var interval1; // molang
 var interval2; // cup
 var interval3; // send molang
-var molangposx = [0, 30, 60, 90, 120,
+var molangposx = [60, 90, 120,
   150, 180, 210, 240, 270,
   300, 330, 360, 390, 420,
-  450, 480, 510, 540, 570]; // 20
+  450, 480, 510, 540]; // 17
 var x;
 for (x = 0; x < molangposx.length; x++)
 {
-  molangposx[x] = 50 + 25 * (Math.floor(Math.random() * 20));
+  molangposx[x] = 100 + 16 * (Math.floor(Math.random() * 26));
 }
-var molangposy = [0, 0, 0, 0, 0,
+var molangposy = [0, 0,
    0, 0, 0, 0, 0,
    0, 0, 0, 0, 0,
-   0, 0, 0, 0, 0]; // 20
+   0, 0, 0, 0, 0]; // 17
 var y;
 for (y = 0; y < molangposy.length; y++)
 {
-  molangposy[y] = -1 * Math.floor(Math.random() * 50) * 30;
+  molangposy[y] = -1 * Math.ceil(Math.random() * 30) * 50;
 }
 
 var status = [false, false, false, false, false];
@@ -68,21 +68,155 @@ cup.onload = function() {
 };
 cup.src = '../mlcatch/images/cup.png';
 
+// molang members
+// aether
+var aether = new Image();
+aether.onload = function() {
+      loader = loader + 1;
+      console.log("done loading aether");
+};
+aether.src = '../mlcatch/images/mlaether.png';
+
+// argent
+var argent = new Image();
+argent.onload = function() {
+      loader = loader + 1;
+      console.log("done loading argent");
+};
+argent.src = '../mlcatch/images/mlargent.png';
+
+// aria
+var aria = new Image();
+aria.onload = function() {
+      loader = loader + 1;
+      console.log("done loading aria");
+};
+aria.src = '../mlcatch/images/mlaria.png';
+
+// atsuko
+var atsuko = new Image();
+atsuko.onload = function() {
+      loader = loader + 1;
+      console.log("done loading atsuko");
+};
+atsuko.src = '../mlcatch/images/mlatsuko.png';
+
+// baek
+var baek = new Image();
+baek.onload = function() {
+      loader = loader + 1;
+      console.log("done loading baek");
+};
+baek.src = '../mlcatch/images/mlbaek.png';
+
+// bug
+var bug = new Image();
+bug.onload = function() {
+      loader = loader + 1;
+      console.log("done loading bug");
+};
+bug.src = '../mlcatch/images/mlbug.png';
+
+// bunny
+var bunny = new Image();
+bunny.onload = function() {
+      loader = loader + 1;
+      console.log("done loading bunny");
+};
+bunny.src = '../mlcatch/images/mlbunny.png';
+
+// catsr2f
+var catsr2f = new Image();
+catsr2f.onload = function() {
+      loader = loader + 1;
+      console.log("done loading catsr2f");
+};
+catsr2f.src = '../mlcatch/images/mlcatsr2f.png';
+
+// isaac
+var isaac = new Image();
+isaac.onload = function() {
+      loader = loader + 1;
+      console.log("done loading isaac");
+};
+isaac.src = '../mlcatch/images/mlisaac.png';
+
+// jia
 var jia = new Image();
 jia.onload = function() {
-      // context.drawImage(cup, pos, 250, 150, 150);
       loader = loader + 1;
-      // isLoaded(); // last image to load, so start game here
       console.log("done loading jia");
 };
-jia.src = '../mlcatch/images/jia.png';
+jia.src = '../mlcatch/images/mljia.png';
 
-var molang = [jia, jia, jia, jia, jia];
-  /*
-  jia, jia, jia, jia, jia,
-  jia, jia, jia, jia, jia,
-  jia, jia, jia, jia, jia];
-*/
+// kishi
+var kishi = new Image();
+kishi.onload = function() {
+      loader = loader + 1;
+      console.log("done loading kishi");
+};
+kishi.src = '../mlcatch/images/mlkishi.png';
+
+// nico
+var nico = new Image();
+nico.onload = function() {
+      loader = loader + 1;
+      console.log("done loading nico");
+};
+nico.src = '../mlcatch/images/mlnico.png';
+
+// roseline
+var roseline = new Image();
+roseline.onload = function() {
+      loader = loader + 1;
+      console.log("done loading roseline");
+};
+roseline.src = '../mlcatch/images/mlroseline.png';
+
+// sammi
+var sammi = new Image();
+sammi.onload = function() {
+      loader = loader + 1;
+      console.log("done loading sammi");
+};
+sammi.src = '../mlcatch/images/mlsammi.png';
+
+// tawaki
+var tawaki = new Image();
+tawaki.onload = function() {
+      loader = loader + 1;
+      console.log("done loading tawaki");
+};
+tawaki.src = '../mlcatch/images/mltawaki.png';
+
+// xuan
+var xuan = new Image();
+xuan.onload = function() {
+      loader = loader + 1;
+      console.log("done loading xuan");
+};
+xuan.src = '../mlcatch/images/mlxuan.png';
+
+// yenna
+var yenna = new Image();
+yenna.onload = function() {
+      loader = loader + 1;
+      console.log("done loading yenna");
+};
+yenna.src = '../mlcatch/images/mlyenna.png';
+
+var molang = [aether, argent, aria, atsuko, baek,
+  bug, bunny, catsr2f, isaac, jia,
+  kishi, nico, roseline, sammi, tawaki,
+  xuan, yenna]; // 17
+
+var molangarray = [jia, jia, jia, jia, jia];
+
+for (z = 0; z < molangarray.length; z++)
+{
+  var r = Math.floor(Math.random() * molang.length);
+  molangarray[z] = molang[r];
+}
 
 // Draws the Loading Page
 function drawLoadingPage()
@@ -203,7 +337,7 @@ function updateScore(num = 0)
   {
     lives = lives - 1;
 
-    if (lives <= 0)
+    if (lives == 0)
     {
       setTimeout(endGame, 1000);
     }
@@ -219,41 +353,50 @@ function endGame()
   console.log("cleared" + page);
   drawEndPage();
   drawEndScore();
-  posx = 10;
-  score = 0;
-  lives = 3;
 
   var i;
   for (i = 0; i < molangposx.length; i++)
   {
-    molangposx[i] = 50 + (25 * (Math.floor(Math.random() * 20)));
+    molangposx[i] = 100 + 16 * (Math.floor(Math.random() * 26));
   }
   var j;
   for (j = 0; j < molangposy.length; j++)
   {
-    molangposy[j] = -1 * Math.floor(Math.random() * 50) * 30;
+    molangposy[j] = -1 * Math.ceil(Math.random() * 30) * 50;
   }
+
+  var k;
+  for (k = 0; k < molangarray.length; k++)
+  {
+    var rand = Math.floor(Math.random() * molang.length);
+    console.log("updated" + rand);
+    molangarray[k] = molang[rand];
+  }
+
+  posx = 250;
+  score = 0;
+  lives = 3;
 }
 
 function drawMolang()
 {
-  for (i = 0; i < molang.length; i++)
+  for (i = 0; i < molangarray.length; i++)
   {
     if(molangposy[i] == 475)
     {
-      molangposy[i] = -1 * Math.floor(Math.random() * 50) * 30;
-      molangposx[i] = 50 + 25 * (Math.floor(Math.random() * 20));
+      molangposy[i] = -1 * Math.ceil(Math.random() * 30) * 50;
+      molangposx[i] = 100 + 16 * (Math.floor(Math.random() * 26));
       console.log("cup never hit and reset "+ molangposy[i] + " " + checkCup(i));
     }
     else if(molangposy[i] == 500)
     {
-      molangposy[i] = -1 * Math.floor(Math.random() * 50) * 30;
-      molangposx[i] = 50 + 25 * (Math.floor(Math.random() * 20));
+      molangposy[i] = -1 * Math.ceil(Math.random() * 30) * 50;
+      molangposx[i] = 100 + 16 * (Math.floor(Math.random() * 26));
       console.log("cup did hit and reset " + molangposy[i] + " " + checkCup(i));
     }
     else if (!checkCup(i) && molangposy[i] < 475) // 250 is the grass, not caught
     {
-      context.drawImage(molang[i], molangposx[i], molangposy[i], 50, 50);
+      context.drawImage(molangarray[i], molangposx[i], molangposy[i], 50, 50);
       molangposy[i] = molangposy[i] + 1;
       // console.log("i made it" + molangposy + checkCup(0));
       updateScore(i);
@@ -420,7 +563,7 @@ function isLoaded()
 // Starts the game
 drawLoadingPage();
 // gives enough time to load
-setTimeout(startGame, 2000);
+setTimeout(startGame, 3500);
 
 
 /*
