@@ -29,7 +29,7 @@ var molangposy = [0, 0, 0, 0, 0,
 var y;
 for (y = 0; y < molangposy.length; y++)
 {
-  molangposy[y] = -1 * Math.floor(Math.random() * 50) * 10;
+  molangposy[y] = -1 * Math.floor(Math.random() * 50) * 30;
 }
 
 var status = [false, false, false, false, false];
@@ -195,11 +195,11 @@ function checkCup(num = 0) // true if the cup is in the path of the molang
 function updateScore(num = 0)
 {
 
-  if (molangposy[num] == 500)
+  if (molangposy[num] == 500) // got caught
   {
     score = score + 1;
   }
-  else if(molangposy[num] == 475)
+  else if(molangposy[num] == 475) // didn't get caught
   {
     lives = lives - 1;
 
@@ -208,19 +208,6 @@ function updateScore(num = 0)
       setTimeout(endGame, 1000);
     }
   }
-
-/*
-  var i;
-  for (i = 0; i < status.length; i++)
-  {
-    if (status[i])
-    {
-      score = score + 1;
-    }
-    else {
-    }
-  }
-*/
 }
 
 function endGame()
@@ -244,7 +231,7 @@ function endGame()
   var j;
   for (j = 0; j < molangposy.length; j++)
   {
-    molangposy[j] = -1 * Math.floor(Math.random() * 50) * 10;
+    molangposy[j] = -1 * Math.floor(Math.random() * 50) * 30;
   }
 }
 
@@ -252,15 +239,26 @@ function drawMolang()
 {
   for (i = 0; i < molang.length; i++)
   {
-    if (!checkCup(i) && molangposy[i] < 475) // 250 is the grass
+    if(molangposy[i] == 475)
+    {
+      molangposy[i] = -1 * Math.floor(Math.random() * 50) * 30;
+      molangposx[i] = 50 + 25 * (Math.floor(Math.random() * 20));
+      console.log("cup never hit and reset "+ molangposy[i] + " " + checkCup(i));
+    }
+    else if(molangposy[i] == 500)
+    {
+      molangposy[i] = -1 * Math.floor(Math.random() * 50) * 30;
+      molangposx[i] = 50 + 25 * (Math.floor(Math.random() * 20));
+      console.log("cup did hit and reset " + molangposy[i] + " " + checkCup(i));
+    }
+    else if (!checkCup(i) && molangposy[i] < 475) // 250 is the grass, not caught
     {
       context.drawImage(molang[i], molangposx[i], molangposy[i], 50, 50);
       molangposy[i] = molangposy[i] + 1;
-
       // console.log("i made it" + molangposy + checkCup(0));
       updateScore(i);
     }
-    else if (checkCup(i))
+    else if (checkCup(i)) // caught
     {
       molangposy[i] = 500;
       updateScore(i);
