@@ -367,7 +367,7 @@ function startGame()
       }
       else if (page == 6)
       {
-        // sound.play();
+        sound.play();
         drawHomePage();
       }
     }
@@ -420,7 +420,7 @@ function isLoaded()
 // Starts the game
 drawLoadingPage();
 // gives enough time to load
-setTimeout(startGame, 1000);
+setTimeout(startGame, 2000);
 
 
 /*
