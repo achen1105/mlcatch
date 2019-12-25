@@ -16,16 +16,16 @@ var interval3; // send molang
 var molangposx = [60, 90, 120,
   150, 180, 210, 240, 270,
   300, 330, 360, 390, 420,
-  450, 480, 510, 540]; // 17
+  450, 480, 510, 540, 30]; // 18
 var x;
 for (x = 0; x < molangposx.length; x++)
 {
   molangposx[x] = 100 + 16 * (Math.floor(Math.random() * 26));
 }
-var molangposy = [0, 0,
+var molangposy = [0, 0, 0,
    0, 0, 0, 0, 0,
    0, 0, 0, 0, 0,
-   0, 0, 0, 0, 0]; // 17
+   0, 0, 0, 0, 0]; // 18
 var y;
 for (y = 0; y < molangposy.length; y++)
 {
@@ -205,10 +205,18 @@ yenna.onload = function() {
 };
 yenna.src = '../mlcatch/images/mlyenna.png';
 
+// flando
+var flando = new Image();
+flando.onload = function() {
+      loader = loader + 1;
+      console.log("done loading flando");
+};
+flando.src = '../mlcatch/images/mlflando.png';
+
 var molang = [aether, argent, aria, atsuko, baek,
   bug, bunny, catsr2f, isaac, jia,
   kishi, nico, roseline, sammi, tawaki,
-  xuan, yenna]; // 17
+  xuan, yenna, flando]; // 18
 
 var molangarray = [jia, jia, jia, jia, jia];
 
